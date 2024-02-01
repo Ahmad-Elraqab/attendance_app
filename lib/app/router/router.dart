@@ -21,23 +21,23 @@ class AppRouter extends $AppRouter {
           children: [
             AutoRoute(
               initial: true,
-              page: MainView.page,
+              page: HomeView.page,
               path: 'home',
             ),
             AutoRoute(
-              page: MainView.page,
+              page: ClockView.page,
               path: 'clock',
             ),
             AutoRoute(
-              page: MainView.page,
+              page: CalendarView.page,
               path: 'calendar',
             ),
             AutoRoute(
-              page: MainView.page,
+              page: MoneyView.page,
               path: 'money',
             ),
             AutoRoute(
-              page: MainView.page,
+              page: NotificationView.page,
               path: 'notification',
             ),
           ],

@@ -37,6 +37,15 @@ abstract class AppTextStyle {
     );
   }
 
+  static TextStyle get bold36 {
+    return const TextStyle(
+      fontSize: 36,
+      color: Colors.black,
+      fontFamily: 'Poppins',
+      fontWeight: FontWeight.w700,
+    );
+  }
+
   static TextStyle get bold8 {
     return const TextStyle(
       fontSize: 8,
@@ -193,6 +202,15 @@ abstract class AppTextStyle {
   static TextStyle get medium12 {
     return const TextStyle(
       fontSize: 12,
+      fontWeight: FontWeight.w500,
+      color: Colors.black,
+      fontFamily: 'Poppins',
+    );
+  }
+
+  static TextStyle get medium10 {
+    return const TextStyle(
+      fontSize: 10,
       fontWeight: FontWeight.w500,
       color: Colors.black,
       fontFamily: 'Poppins',

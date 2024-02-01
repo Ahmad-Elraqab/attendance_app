@@ -1,6 +1,5 @@
 import 'package:attendance_app/app/env/app_color.dart';
 import 'package:attendance_app/app/env/constants.dart';
-import 'package:attendance_app/app/env/text_style.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,11 +19,7 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigationState extends State<BottomNavigation> {
   void onTap(index) async {
-    if (index == 1 || index == 3) {
-      widget.tabsRouter.setActiveIndex(index);
-    } else {
-      widget.tabsRouter.setActiveIndex(index);
-    }
+    widget.tabsRouter.setActiveIndex(index);
   }
 
   @override
