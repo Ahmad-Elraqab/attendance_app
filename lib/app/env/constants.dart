@@ -11,7 +11,11 @@ class AppIcon {
   static String cup = '$imagePath/cup.png';
   static String plant = '$imagePath/plant.png';
   static String profileMock = '$imagePath/profile_mock.png';
+  static String logoSmall = '$imagePath/logo-small.png';
+  static String logoLarge = '$imagePath/logo-large.png';
   static String clock = '$iconPath/clock.svg';
+  static String eyeSlash = '$iconPath/eye-slash.svg';
+  static String archiveAdd = '$iconPath/archive-add.svg';
   static String money = '$iconPath/money.svg';
   static String notification = '$iconPath/notification.svg';
 }

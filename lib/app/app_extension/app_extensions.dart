@@ -5,64 +5,88 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 extension TextFormField on TextField {
-  TextField formTextField({
+  Widget formTextField({
     required String label,
     bool? secure,
     int? maxLines = 1,
     bool enable = true,
     Function? onSecure,
+    Function? onAction,
+    String? actionIcon,
     FocusNode? focusNode,
     TextEditingController? controller,
   }) {
     final border = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(12),
       borderSide: BorderSide(
         color: AppColor.reGrey9C9C9C,
         width: 1,
       ),
     );
-    return TextField(
-      enabled: enable,
-      controller: controller,
-      focusNode: focusNode,
-      decoration: InputDecoration(
-        border: border,
-        errorBorder: border,
-        enabledBorder: border,
-        focusedBorder: border.copyWith(
-          borderSide: BorderSide(
-            // color: AppColor.reGreen216106,
-            width: 2,
+    return Stack(
+      children: [
+        TextField(
+          enabled: enable,
+          controller: controller,
+          focusNode: focusNode,
+          textAlignVertical: TextAlignVertical.center,
+          scrollPadding: EdgeInsets.zero,
+          decoration: InputDecoration(
+            border: border,
+            errorBorder: border,
+            enabledBorder: border,
+            focusedBorder: border.copyWith(
+              borderSide: BorderSide(
+                color: AppColor.reGreyD6D6D6,
+                width: 2,
+              ),
+            ),
+            disabledBorder: border,
+            focusedErrorBorder: border,
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 17.5, horizontal: 16),
+            hintText: label,
+            hintStyle: AppTextStyle.regular14.copyWith(
+              color: AppColor.reGreyA5A5A5,
+            ),
+            counterStyle: AppTextStyle.regular14.copyWith(
+              color: AppColor.reGreyA5A5A5,
+            ),
+            alignLabelWithHint: true,
+            // suffixIconConstraints:
+            //     const BoxConstraints(maxWidth: 24, maxHeight: 24),
+            // isCollapsed: true,
           ),
+          maxLines: maxLines,
+          obscureText: secure ?? false,
         ),
-        disabledBorder: border,
-        focusedErrorBorder: border,
-        contentPadding: const EdgeInsets.all(16),
-        hintText: label,
-        hintStyle: AppTextStyle.medium16.copyWith(
-          color: AppColor.reGrey9C9C9C,
-        ),
-        counterStyle: AppTextStyle.medium16.copyWith(
-          color: AppColor.reGrey9C9C9C,
-        ),
-        alignLabelWithHint: true,
-        suffix: secure != null
-            ? InkWell(
-                onTap: () => onSecure!(),
-                // child: secure
-                //     ? SvgPicture.asset(
-                //         AppIcon.closedEye,
-                //         height: 16,
-                //       )
-                //     : SvgPicture.asset(
-                //         AppIcon.openedEye,
-                //         height: 16,
-                //       ),
-              )
-            : null,
-      ),
-      maxLines: maxLines,
-      obscureText: secure ?? false,
+        Positioned(
+          right: 16,
+          top: 16,
+          child: secure != null
+              ? InkWell(
+                  onTap: () => onSecure!(),
+                  child: secure
+                      ? SvgPicture.asset(
+                          AppIcon.eyeSlash,
+                          height: 24,
+                        )
+                      : SvgPicture.asset(
+                          AppIcon.eyeSlash,
+                          height: 24,
+                        ),
+                )
+              : onAction != null
+                  ? InkWell(
+                      onTap: () => onAction(),
+                      child: SvgPicture.asset(
+                        actionIcon.toString(),
+                        height: 24,
+                      ),
+                    )
+                  : const SizedBox(),
+        )
+      ],
     );
   }
 

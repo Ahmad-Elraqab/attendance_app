@@ -2,6 +2,7 @@ import 'package:attendance_app/app/app_extension/app_extensions.dart';
 import 'package:attendance_app/app/env/app_color.dart';
 import 'package:attendance_app/app/env/constants.dart';
 import 'package:attendance_app/app/env/text_style.dart';
+import 'package:attendance_app/app/router/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -38,7 +39,12 @@ class _HomeViewState extends State<HomeView> {
               child: Column(
                 children: [
                   const SizedBox(height: appBarHeight - 50),
-                  const HomeWorkType(),
+                  InkWell(
+                    onTap: () {
+                      context.router.root.push(const LoginView());
+                    },
+                    child: const HomeWorkType(),
+                  ),
                   const SizedBox(height: 12),
                   AttendanceComponent(),
                   const SizedBox(height: 12),
