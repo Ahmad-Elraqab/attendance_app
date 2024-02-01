@@ -16,6 +16,9 @@ class AppIcon {
   static String clock = '$iconPath/clock.svg';
   static String eyeSlash = '$iconPath/eye-slash.svg';
   static String archiveAdd = '$iconPath/archive-add.svg';
+  static String filter = '$iconPath/filter.svg';
+  static String arrowDown = '$iconPath/arrow-down.svg';
+  static String calendarFill = '$iconPath/calendar-fill.svg';
   static String money = '$iconPath/money.svg';
   static String notification = '$iconPath/notification.svg';
 }

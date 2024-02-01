@@ -1,7 +1,6 @@
 import 'package:attendance_app/app/app_view_models/app_view_model.dart';
 import 'package:attendance_app/app/env/app_color.dart';
 import 'package:attendance_app/app/router/router.gr.dart';
-import 'package:attendance_app/app/widgets/custom_app_bar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +47,7 @@ class _MainViewState extends State<MainView> {
 
           return Stack(
             children: [
-              CustomAppBar(width: width),
+              // CustomAppBar(width: width),
               child,
               BottomNavigation(
                 width: width,

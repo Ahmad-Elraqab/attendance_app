@@ -35,6 +35,8 @@ abstract class AppColor {
 
   static Color get reGreyD7D7D7 => const Color(0XFFD7D7D7);
 
+  static Color get reGreyFAFAFA => const Color(0XFFFAFAFA);
+
   static Color get reGreyD6D6D6 => const Color(0XFFD6D6D6);
 
   static Color get reGreyEBEBEB => const Color(0XFFEBEBEB);
@@ -50,6 +52,7 @@ abstract class AppColor {
   static Color get reGrey9C9C9C => const Color(0XFF9C9C9C);
 
   static Color get reGrey606060 => const Color(0XFF606060);
+
   static Color get reGreyEEEEEE => const Color(0XFFEEEEEE);
 
   static Color get reGrey666666 => const Color(0XFF666666);
