@@ -15,6 +15,7 @@ class AppIcon {
   static String logoLarge = '$imagePath/logo-large.png';
   static String clock = '$iconPath/clock.svg';
   static String eyeSlash = '$iconPath/eye-slash.svg';
+  static String add = '$iconPath/add.svg';
   static String archiveAdd = '$iconPath/archive-add.svg';
   static String filter = '$iconPath/filter.svg';
   static String arrowDown = '$iconPath/arrow-down.svg';
