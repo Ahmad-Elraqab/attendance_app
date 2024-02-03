@@ -3,10 +3,15 @@ class AppIcon {
   static String imagePath = 'assets/images';
   static String home = '$iconPath/home.svg';
   static String arrowRight = '$iconPath/arrow-right.svg';
+  static String arrowLeft = '$iconPath/arrow-left.svg';
   static String check = '$iconPath/check.svg';
   static String checkRed = '$iconPath/check-red.svg';
   static String star = '$iconPath/Icon.svg';
   static String share = '$iconPath/share.svg';
+  static String redCheck = '$iconPath/check-red-c.svg';
+  static String notificationIcon = '$iconPath/notification-icon.svg';
+  static String message = '$iconPath/message.svg';
+  static String greenCheck = '$iconPath/check-green-c.svg';
   static String trash = '$iconPath/trash.svg';
   static String logout = '$iconPath/logout.svg';
   static String warning = '$iconPath/warning-2.svg';

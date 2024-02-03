@@ -19,6 +19,10 @@ class AppRouter extends $AppRouter {
           path: '/profile',
         ),
         AutoRoute(
+          page: NotificationDetailsView.page,
+          path: '/notificationDetails',
+        ),
+        AutoRoute(
           page: LoginView.page,
           path: '/login',
         ),
