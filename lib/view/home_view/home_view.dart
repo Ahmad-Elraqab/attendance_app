@@ -43,7 +43,8 @@ class _HomeViewState extends State<HomeView> {
                   const SizedBox(height: appBarHeight - 50),
                   InkWell(
                     onTap: () {
-                      context.router.root.push(const LoginView());
+                      // context.router.root.push(const LoginView());
+                      context.router.root.push(const ProfileDetailsView());
                     },
                     child: const HomeWorkType(),
                   ),

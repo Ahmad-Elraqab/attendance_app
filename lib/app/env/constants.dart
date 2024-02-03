@@ -5,6 +5,11 @@ class AppIcon {
   static String arrowRight = '$iconPath/arrow-right.svg';
   static String check = '$iconPath/check.svg';
   static String checkRed = '$iconPath/check-red.svg';
+  static String star = '$iconPath/Icon.svg';
+  static String share = '$iconPath/share.svg';
+  static String trash = '$iconPath/trash.svg';
+  static String logout = '$iconPath/logout.svg';
+  static String warning = '$iconPath/warning-2.svg';
   static String checkGreen = '$iconPath/check-green.svg';
   static String onsite = '$iconPath/onsite.svg';
   static String calendar = '$iconPath/calendar.svg';
@@ -13,6 +18,7 @@ class AppIcon {
   static String profileMock = '$imagePath/profile_mock.png';
   static String logoSmall = '$imagePath/logo-small.png';
   static String logoLarge = '$imagePath/logo-large.png';
+  static String profileImage = '$imagePath/profile_image.png';
   static String clock = '$iconPath/clock.svg';
   static String eyeSlash = '$iconPath/eye-slash.svg';
   static String add = '$iconPath/add.svg';
