@@ -1,4 +1,5 @@
 import 'package:attendance_app/app/app_extension/app_extensions.dart';
+import 'package:attendance_app/app/data_sources/local_storage/auth_token_storage.dart';
 import 'package:attendance_app/app/env/app_color.dart';
 import 'package:attendance_app/app/env/constants.dart';
 import 'package:attendance_app/app/env/text_style.dart';
@@ -7,6 +8,7 @@ import 'package:attendance_app/app/widgets/custom_app_bar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 @RoutePage()
@@ -44,7 +46,8 @@ class _HomeViewState extends State<HomeView> {
                   InkWell(
                     onTap: () {
                       // context.router.root.push(const LoginView());
-                      context.router.root.push(const ProfileDetailsView());
+                      // context.router.root.push(const ProfileDetailsView());
+                      // context.read<AuthTokenStorage>().clear();
                     },
                     child: const HomeWorkType(),
                   ),
@@ -482,7 +485,7 @@ class HomeWorkType extends StatelessWidget {
         color: AppColor.reWhiteFFFFFF,
       ),
       padding: const EdgeInsets.all(16),
-      child: _buildEndBox(),
+      child: _buildCheckInBox(),
     );
   }
 

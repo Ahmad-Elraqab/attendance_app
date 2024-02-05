@@ -1,6 +1,7 @@
 import 'package:attendance_app/app/env/app_color.dart';
 import 'package:attendance_app/app/env/constants.dart';
 import 'package:attendance_app/app/env/text_style.dart';
+import 'package:attendance_app/app/router/router.gr.dart';
 import 'package:attendance_app/view/home_view/home_view.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,8 @@ class CalendarView extends StatefulWidget {
 }
 
 class _CalendarViewState extends State<CalendarView> {
+  int? selectedBottomSheetFilter;
+  int? selectedBottomSheetTypeFilter;
   int? filter = 0;
   @override
   Widget build(BuildContext context) {
@@ -57,8 +60,259 @@ class _CalendarViewState extends State<CalendarView> {
                                 color: AppColor.reBlack1C1F26,
                               ),
                             ),
-                            SvgPicture.asset(
-                              AppIcon.filter,
+                            InkWell(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  isDismissible: true,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  backgroundColor: AppColor.reWhiteFFFFFF,
+                                  isScrollControlled: true,
+                                  clipBehavior: Clip.hardEdge,
+                                  builder: (context) {
+                                    List listStatus = [
+                                      'Pending',
+                                      'Approved',
+                                      'Rejected'
+                                    ];
+                                    List listType = ['Sick', 'Casual'];
+                                    return StatefulBuilder(
+                                      builder: (context, setState) => Container(
+                                        height: 409,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 8, horizontal: 16),
+                                        decoration: BoxDecoration(
+                                          color: AppColor.reWhiteFFFFFF,
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Leaves Filter",
+                                                  style: AppTextStyle.bold16
+                                                      .copyWith(
+                                                    color:
+                                                        AppColor.reBlack1C1F26,
+                                                  ),
+                                                ),
+                                                SvgPicture.asset(AppIcon.close)
+                                              ],
+                                            ),
+                                            const SizedBox(height: 22),
+                                            Text(
+                                              "Status",
+                                              style: AppTextStyle.regular16
+                                                  .copyWith(
+                                                color: AppColor.reGrey666666,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 8),
+                                            Wrap(
+                                              spacing: 8,
+                                              direction: Axis.horizontal,
+                                              runAlignment: WrapAlignment.start,
+                                              children: [
+                                                for (var i = 0; i < 3; i++)
+                                                  InkWell(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        selectedBottomSheetFilter =
+                                                            i;
+                                                      });
+                                                    },
+                                                    child: Container(
+                                                      width: 110,
+                                                      // constraints: BoxConstraints.expand(),
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                        vertical: 17.5,
+                                                        horizontal: 16,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        color: selectedBottomSheetFilter ==
+                                                                i
+                                                            ? AppColor
+                                                                .reBlue105F82
+                                                            : AppColor
+                                                                .reWhiteFFFFFF,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                        border:
+                                                            selectedBottomSheetFilter ==
+                                                                    i
+                                                                ? null
+                                                                : Border.all(
+                                                                    color: AppColor
+                                                                        .reBlack1D1F1F
+                                                                        .withOpacity(
+                                                                            .1),
+                                                                    width: 1,
+                                                                  ),
+                                                      ),
+                                                      child: Center(
+                                                        child: Text(
+                                                          listStatus[i],
+                                                          style: AppTextStyle
+                                                              .regular14
+                                                              .copyWith(
+                                                                  color: selectedBottomSheetFilter ==
+                                                                          i
+                                                                      ? AppColor
+                                                                          .reWhiteFFFFFF
+                                                                      : AppColor
+                                                                          .reGrey666666),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                              ],
+                                            ),
+                                            const SizedBox(height: 16),
+                                            Text(
+                                              "Type",
+                                              style: AppTextStyle.regular16
+                                                  .copyWith(
+                                                color: AppColor.reGrey666666,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 8),
+                                            Wrap(
+                                              spacing: 8,
+                                              direction: Axis.horizontal,
+                                              runAlignment: WrapAlignment.start,
+                                              children: [
+                                                for (var i = 0; i < 2; i++)
+                                                  InkWell(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        selectedBottomSheetTypeFilter =
+                                                            i;
+                                                      });
+                                                    },
+                                                    child: Container(
+                                                      width: 110,
+                                                      // constraints: BoxConstraints.expand(),
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                        vertical: 17.5,
+                                                        horizontal: 16,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        color: selectedBottomSheetTypeFilter ==
+                                                                i
+                                                            ? AppColor
+                                                                .reBlue105F82
+                                                            : AppColor
+                                                                .reWhiteFFFFFF,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                        border:
+                                                            selectedBottomSheetTypeFilter ==
+                                                                    i
+                                                                ? null
+                                                                : Border.all(
+                                                                    color: AppColor
+                                                                        .reBlack1D1F1F
+                                                                        .withOpacity(
+                                                                            .1),
+                                                                    width: 1,
+                                                                  ),
+                                                      ),
+                                                      child: Center(
+                                                        child: Text(
+                                                          listType[i],
+                                                          style: AppTextStyle
+                                                              .regular14
+                                                              .copyWith(
+                                                                  color: selectedBottomSheetTypeFilter ==
+                                                                          i
+                                                                      ? AppColor
+                                                                          .reWhiteFFFFFF
+                                                                      : AppColor
+                                                                          .reGrey666666),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                              ],
+                                            ),
+                                            const SizedBox(height: 28),
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.all(16),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12),
+                                                    border: Border.all(
+                                                        color: AppColor
+                                                            .reBlue105F82),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      "Reset",
+                                                      style: AppTextStyle
+                                                          .medium16
+                                                          .copyWith(
+                                                        color: AppColor
+                                                            .reBlue105F82,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 8),
+                                                Expanded(
+                                                  child: Container(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            16),
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          AppColor.reBlue105F82,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
+                                                      border: Border.all(
+                                                          color: AppColor
+                                                              .reBlue105F82),
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        "Apply",
+                                                        style: AppTextStyle
+                                                            .medium16
+                                                            .copyWith(
+                                                          color: AppColor
+                                                              .reWhiteFFFFFF,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              child: SvgPicture.asset(
+                                AppIcon.filter,
+                              ),
                             )
                           ],
                         ),
@@ -190,16 +444,21 @@ class _CalendarViewState extends State<CalendarView> {
             Positioned(
               right: 0,
               bottom: 90,
-              child: Container(
-                height: 56,
-                width: 56,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: AppColor.reBlue105F82,
-                ),
-                child: Center(
-                  child: SvgPicture.asset(
-                    AppIcon.add,
+              child: InkWell(
+                onTap: () {
+                  context.router.root.push(const LeaveApplicationView());
+                },
+                child: Container(
+                  height: 56,
+                  width: 56,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: AppColor.reBlue105F82,
+                  ),
+                  child: Center(
+                    child: SvgPicture.asset(
+                      AppIcon.add,
+                    ),
                   ),
                 ),
               ),

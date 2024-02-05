@@ -19,7 +19,7 @@ extension TextFormField on TextField {
     final border = OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
       borderSide: BorderSide(
-        color: AppColor.reGrey9C9C9C,
+        color: AppColor.reGreyD6D6D6,
         width: 1,
       ),
     );
@@ -223,12 +223,12 @@ extension ContainerButtons on Container {
     Color? borderColor,
     Color? color,
     double? height,
-    required String label,
     double? verticalPadding,
     double? horizontalPadding,
     TextStyle? appTextStyle,
     Function? onTap,
     double? spaceBetweenItems,
+    required String label,
     required String icon,
   }) {
     return InkWell(

@@ -18,6 +18,8 @@ class AppIcon {
   static String checkGreen = '$iconPath/check-green.svg';
   static String onsite = '$iconPath/onsite.svg';
   static String calendar = '$iconPath/calendar.svg';
+  static String handWave = '${iconPath}/hand-wave.svg';
+  static String info = '${iconPath}/info-circle.svg';
   static String cup = '$imagePath/cup.png';
   static String plant = '$imagePath/plant.png';
   static String profileMock = '$imagePath/profile_mock.png';
@@ -25,8 +27,11 @@ class AppIcon {
   static String logoLarge = '$imagePath/logo-large.png';
   static String profileImage = '$imagePath/profile_image.png';
   static String clock = '$iconPath/clock.svg';
+  static String close = '$iconPath/Close.svg';
   static String eyeSlash = '$iconPath/eye-slash.svg';
   static String add = '$iconPath/add.svg';
+  static String timer = '$imagePath/timer.png';
+  static String arrowCurved = '$iconPath/arrow-down-curved.svg';
   static String archiveAdd = '$iconPath/archive-add.svg';
   static String filter = '$iconPath/filter.svg';
   static String arrowDown = '$iconPath/arrow-down.svg';

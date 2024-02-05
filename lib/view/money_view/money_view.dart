@@ -2,8 +2,10 @@ import 'package:attendance_app/app/env/app_color.dart';
 import 'package:attendance_app/app/env/constants.dart';
 import 'package:attendance_app/app/env/text_style.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'dart:math' as math;
 
 @RoutePage()
 class MoneyView extends StatefulWidget {
@@ -30,6 +32,24 @@ class _MoneyViewState extends State<MoneyView> {
     'Loan': '400',
     'Total': '2,100',
   };
+
+  List months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September' 'October',
+    'November',
+    'December',
+  ];
+  List<ExpandableController> controllers =
+      List.generate(3, (index) => ExpandableController(initialExpanded: false));
+
+  int? selectedMonth;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,8 +105,24 @@ class _MoneyViewState extends State<MoneyView> {
                         Expanded(
                           child: Align(
                             alignment: Alignment.bottomRight,
-                            child: SvgPicture.asset(
-                              AppIcon.calendarFill,
+                            child: InkWell(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  isDismissible: true,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  backgroundColor: AppColor.reWhiteFFFFFF,
+                                  isScrollControlled: true,
+                                  builder: (context) {
+                                    return _buildBottomSheet(context);
+                                  },
+                                );
+                              },
+                              child: SvgPicture.asset(
+                                AppIcon.calendarFill,
+                              ),
                             ),
                           ),
                         ),
@@ -270,6 +306,190 @@ class _MoneyViewState extends State<MoneyView> {
                   ],
                 ),
               )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBottomSheet(BuildContext context) {
+    return StatefulBuilder(
+      builder: (context, setState) => SizedBox(
+        height: MediaQuery.sizeOf(context).height * .75,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Select Month",
+                      style: AppTextStyle.bold16.copyWith(
+                        color: AppColor.reBlack1C1F26,
+                      ),
+                    ),
+                    SvgPicture.asset(
+                      AppIcon.close,
+                      height: 28,
+                    )
+                  ],
+                ),
+              ),
+              for (var i = 0; i < controllers.length; i++)
+                ExpandablePanel(
+                  theme: const ExpandableThemeData(
+                    tapHeaderToExpand: true,
+                    tapBodyToExpand: true,
+                    tapBodyToCollapse: true,
+                    useInkWell: true,
+                    animationDuration: Duration(
+                      milliseconds: 500,
+                    ),
+                  ),
+                  controller: controllers[i],
+                  collapsed: InkWell(
+                    onTap: () {
+                      setState(() {
+                        controllers[0].expanded = !controllers[0].expanded;
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: AppColor.reBlack1D1F1F.withOpacity(.1),
+                          ),
+                        ),
+                      ),
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "202${i + 3}",
+                            style: AppTextStyle.regular16.copyWith(
+                              color: AppColor.reBlack1C1F26,
+                            ),
+                          ),
+                          Transform.rotate(
+                            angle: (math.pi / 180) * 180,
+                            child: SvgPicture.asset(
+                              AppIcon.arrowCurved,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  expanded: Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            controllers[0].expanded = !controllers[0].expanded;
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: AppColor.reBlack1D1F1F.withOpacity(.1),
+                              ),
+                            ),
+                          ),
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "202${i + 3}",
+                                style: AppTextStyle.regular16.copyWith(
+                                  color: AppColor.reBlack1C1F26,
+                                ),
+                              ),
+                              Transform.rotate(
+                                angle: (math.pi / 180) * 180,
+                                child: SvgPicture.asset(
+                                  AppIcon.arrowCurved,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      ...months
+                          .map(
+                            (e) => InkWell(
+                              onTap: () {
+                                setState(() {
+                                  selectedMonth = months.indexOf(e);
+                                });
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 16,
+                                ),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: AppColor.reBlack1D1F1F
+                                          .withOpacity(.1),
+                                    ),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                        color:
+                                            months.indexOf(e) == selectedMonth
+                                                ? AppColor.reBlue105F82
+                                                : null,
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: months.indexOf(e) ==
+                                                selectedMonth
+                                            ? null
+                                            : Border.all(
+                                                color: AppColor.reBlack1D1F1F
+                                                    .withOpacity(.1),
+                                              ),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          (months.indexOf(e) + 1).toString(),
+                                          style: AppTextStyle.bold16.copyWith(
+                                            color: months.indexOf(e) ==
+                                                    selectedMonth
+                                                ? AppColor.reWhiteFFFFFF
+                                                : AppColor.reBlack1C1F26,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      e,
+                                      style: AppTextStyle.regular16.copyWith(
+                                        color: AppColor.reBlack1C1F26,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ],
+                  ),
+                )
             ],
           ),
         ),

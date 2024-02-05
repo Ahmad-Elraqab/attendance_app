@@ -2,6 +2,7 @@
 // `flutter pub run build_runner build --delete-conflicting-outputs`
 
 import 'package:attendance_app/app/router/router.gr.dart';
+import 'package:attendance_app/app/router/user_guard.dart';
 import 'package:auto_route/auto_route.dart';
 
 @AutoRouterConfig(
@@ -14,6 +15,10 @@ class AppRouter extends $AppRouter {
 
   @override
   List<AutoRoute> get routes => [
+        AutoRoute(
+          page: LeaveApplicationView.page,
+          path: '/leaveApplication',
+        ),
         AutoRoute(
           page: ProfileDetailsView.page,
           path: '/profile',
@@ -36,6 +41,9 @@ class AppRouter extends $AppRouter {
         ),
         AutoRoute(
           initial: true,
+          guards: [
+            AuthGuard.init(),
+          ],
           page: MainView.page,
           path: '/',
           children: [

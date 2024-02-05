@@ -13,17 +13,17 @@ class EnvironmentConfig {
 
   static const EnvironmentConfig dev = EnvironmentConfig._(
     environment: EnvironmentType.dev,
-    baseApiUrl: '',
+    baseApiUrl: 'https://dev.qatarat-alnada.com',
     webSocketUrl: 'wss://',
   );
   static const EnvironmentConfig staging = EnvironmentConfig._(
     environment: EnvironmentType.staging,
-    baseApiUrl: '',
+    baseApiUrl: 'https://dev.qatarat-alnada.com',
     webSocketUrl: 'wss://',
   );
   static const EnvironmentConfig prod = EnvironmentConfig._(
     environment: EnvironmentType.prod,
-    baseApiUrl: '',
+    baseApiUrl: 'https://dev.qatarat-alnada.com',
     webSocketUrl: 'wss://',
   );
 }

@@ -86,4 +86,128 @@ abstract class AppColor {
 
   // GREEN COLOR
   static Color get reGreen00AF6C => const Color(0XFF00AF6C);
+
+  // =======
+  // MAIN COLOR
+  static Color get reGreen38AB3C => const Color(0XFF38AB3C);
+
+  static Color get reRedAB3838 => const Color(0XFFAB3838);
+
+  static Color get reRedF3B7B7 => const Color(0XFFF3B7B7);
+
+  static Color get reRed700707 => const Color(0XFF700707);
+
+  static Color get reRedFAD204 => const Color(0XFFFAD204);
+
+  static Color get reYellowF7E790 => const Color(0XFFF7E790);
+
+  static Color get reBlueCFD8F9 => const Color(0XFFCFD8F9);
+
+  static Color get reBlue2452F5 => const Color(0XFF2452F5);
+
+  static Color get reBlue142F8C => const Color(0XFF142F8C);
+
+  /// GREEN COLOR
+  static Color get reGreen103003 => const Color(0XFF103003);
+
+  static Color get reGreenFAFFF9 => const Color(0XFFFAFFF9);
+
+  static Color get reGreen319F43 => const Color(0XFF319F43);
+
+  static Color get reGreen216106 => const Color(0XFF216106);
+
+  static Color get reGreen319109 => const Color(0XFF319109);
+
+  static Color get reGreenBEE988 => const Color(0XFFBEE988);
+
+  static Color get reGreen3E650D => const Color(0XFF3E650D);
+
+  static Color get reGreen42C10C => const Color(0XFF42C10C);
+
+  static Color get reGreen53F011 => const Color(0XFF53F011);
+
+  static Color get reGreen76F342 => const Color(0XFF76F342);
+
+  static Color get reGreen99F672 => const Color(0XFF99F672);
+
+  static Color get reGreenB3F895 => const Color(0XFFB3F895);
+
+  static Color get reGreenCCFBB9 => const Color(0XFFCCFBB9);
+
+  static Color get reGreenE5FDDC => const Color(0XFFE5FDDC);
+
+  // BLUE COLOR
+  static Color get reBlue054455 => const Color(0XFF054455);
+
+  static Color get reBlue08677F => const Color(0XFF08677F);
+
+  static Color get reBlue0B89A9 => const Color(0XFF0B89A9);
+
+  static Color get reBlue0EABD4 => const Color(0XFF0EABD4);
+
+  static Color get reBlue1DC5F1 => const Color(0XFF1DC5F1);
+
+  static Color get reBlue48D0F3 => const Color(0XFF48D0F3);
+
+  static Color get reBlue72DBF6 => const Color(0XFF72DBF6);
+
+  static Color get reBlue95E4F8 => const Color(0XFF95E4F8);
+
+  static Color get reBlueB9EDFB => const Color(0XFFB9EDFB);
+
+  static Color get reBlueDCF6FD => const Color(0XFFDCF6FD);
+
+  // PURPLE COLOR
+  static Color get rePurple5C087F => const Color(0XFF5C087F);
+
+  static Color get rePurple7A0BA9 => const Color(0XFF7A0BA9);
+
+  static Color get rePurple990ED4 => const Color(0XFF990ED4);
+
+  static Color get rePurpleB21DF1 => const Color(0XFFB21DF1);
+
+  static Color get rePurpleC148F3 => const Color(0XFFC148F3);
+
+  static Color get rePurpleCF72F6 => const Color(0XFFCF72F6);
+
+  static Color get rePurpleD98EF8 => const Color(0XFFD98EF8);
+
+  static Color get rePurpleE2AAFA => const Color(0XFFE2AAFA);
+
+  static Color get rePurpleECC7FB => const Color(0XFFECC7FB);
+
+  static Color get rePurpleF5E3FD => const Color(0XFFF5E3FD);
+
+  // ORANGE COLOR
+  static Color get reOrange96260A => const Color(0XFF96260A);
+
+  static Color get reOrangeE23A0E => const Color(0XFFE23A0E);
+
+  // static Color get reOrangeE23A0E => const Color(0XFFE23A0E);
+
+  static Color get reOrangeF15027 => const Color(0XFFF15027);
+
+  static Color get reOrangeF46F4C => const Color(0XFFF46F4C);
+
+  static Color get reOrangeF68D72 => const Color(0XFFF68D72);
+
+  static Color get reOrangeF8A48E => const Color(0XFFF8A48E);
+
+  static Color get reOrangeFABBAA => const Color(0XFFFABBAA);
+
+  static Color get reOrangeFBD1C7 => const Color(0XFFFBD1C7);
+
+  static Color get reOrangeFDE8E3 => const Color(0XFFFDE8E3);
+
+  static Color get reTextPendingPayment => const Color(0XFF685805);
+  static Color get reBoxPendingPayment => const Color(0XFFF7E790);
+
+  static Color get reTextUpcoming => const Color(0XFF2452F5);
+  static Color get reBoxUpcoming => const Color(0XFFCFD8F9);
+
+  static Color get reTextCompleted => const Color(0XFF3E650D);
+  static Color get reBoxCompleted => const Color(0XFFBEE988);
+
+  static Color get reTextCancelled => const Color(0XFF700707);
+  static Color get reBoxCancelled => const Color(0XFFF3B7B7);
 }
