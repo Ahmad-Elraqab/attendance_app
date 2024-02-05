@@ -36,7 +36,7 @@ class LeaveService {
 
   Future<List<LeaveTypeModel>> getLeaveTypes() async {
     try {
-      final token = localStorage.getToken();
+      final token = await localStorage.getToken();
 
       final response = await restService.dio.get(
           '/api/method/flow_branding.api.mobile_api.get_leave_type_list?sid=$token');
@@ -44,6 +44,8 @@ class LeaveService {
       final leaveTypes = (response.data['message'] as List)
           .map((e) => LeaveTypeModel.fromJson(e))
           .toList();
+
+      // print(response.data['message']);
 
       return leaveTypes;
     } catch (e) {

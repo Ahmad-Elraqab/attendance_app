@@ -84,18 +84,26 @@ class _LeavesComponentState extends State<LeavesComponent> {
   @override
   void initState() {
     loadLeaves();
+    loadLeaveTypes();
     super.initState();
   }
 
   Future<void> loadLeaves() async {
     context.read<LeaveViewmodel>().getLeaves(
-      onError: (val) {
-        showSnackbar(context, val, SnackbarMessageType.warning);
-      },
-      onSuccess: (val) {
-        showSnackbar(context, "Leaves Loaded", SnackbarMessageType.success);
-      },
-    );
+          onError: (val) {
+            showSnackbar(context, val, SnackbarMessageType.warning);
+          },
+          onSuccess: (val) {},
+        );
+  }
+
+  Future<void> loadLeaveTypes() async {
+    context.read<LeaveViewmodel>().getLeaveTypes(
+          onError: (val) {
+            showSnackbar(context, val, SnackbarMessageType.warning);
+          },
+          onSuccess: (val) {},
+        );
   }
 
   List leavesTitle = ['User Leaves', 'HR Leaves', 'Approver Leaves'];
