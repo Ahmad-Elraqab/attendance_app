@@ -41,7 +41,6 @@ class UserService {
         response.data,
       );
 
-      print(response.data);
       // return user;
       await localStorage.saveToken(user.sid.toString());
       // await storage.write(key: 'id', value: response.data['user_id']);

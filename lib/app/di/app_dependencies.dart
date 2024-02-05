@@ -5,7 +5,9 @@ import 'package:attendance_app/app/data_sources/local_storage/auth_token_storage
 import 'package:attendance_app/app/data_sources/remote/rest_service.dart';
 import 'package:attendance_app/app/data_sources/shared_preferences_wrapper.dart';
 import 'package:attendance_app/app/env/env.dart';
+import 'package:attendance_app/services/leave_service.dart';
 import 'package:attendance_app/services/user_service.dart';
+import 'package:attendance_app/view_models/leave_viewmodel.dart';
 import 'package:attendance_app/view_models/user_viewmodel.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -49,6 +51,11 @@ class AppDependencies {
             service: context.read(),
           ),
         ),
+        ChangeNotifierProvider<LeaveViewmodel>(
+          create: (context) => LeaveViewmodel(
+            service: context.read(),
+          ),
+        ),
       ];
   List<Provider> get _analytics => [];
   List<Provider> get _httpClients => [
@@ -62,6 +69,12 @@ class AppDependencies {
             sharedPreferences: context.read(),
             restService: context.read(),
             storage: context.read(),
+          ),
+        ),
+        Provider<LeaveService>(
+          create: (context) => LeaveService(
+            localStorage: context.read(),
+            restService: context.read(),
           ),
         ),
       ];
