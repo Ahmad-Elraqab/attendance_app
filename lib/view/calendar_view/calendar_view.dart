@@ -88,7 +88,7 @@ class LeavesListView extends StatefulWidget {
 
 class _LeavesListViewState extends State<LeavesListView> {
   int? selectedBottomSheetFilter;
-  int? selectedBottomSheetTypeFilter;
+  // int? selectedBottomSheetTypeFilter;
   int? filter = 0;
   String? filterName;
 
@@ -107,6 +107,7 @@ class _LeavesListViewState extends State<LeavesListView> {
         );
   }
 
+  List listStatus = ['Pending', 'Approved', 'Rejected'];
   @override
   Widget build(BuildContext context) {
     return Consumer<LeaveViewmodel>(
@@ -158,18 +159,13 @@ class _LeavesListViewState extends State<LeavesListView> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                           backgroundColor: AppColor.reWhiteFFFFFF,
-                          isScrollControlled: true,
+                          // isScrollControlled: true,
                           clipBehavior: Clip.hardEdge,
                           builder: (context) {
-                            List listStatus = [
-                              'Pending',
-                              'Approved',
-                              'Rejected'
-                            ];
-                            List listType = ['Sick', 'Casual'];
+                            // List listType = ['Sick', 'Casual'];
                             return StatefulBuilder(
-                              builder: (context, setState) => Container(
-                                height: 409,
+                              builder: (context, setInitState) => Container(
+                                // height: 409,
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 16),
                                 decoration: BoxDecoration(
@@ -207,6 +203,9 @@ class _LeavesListViewState extends State<LeavesListView> {
                                         for (var i = 0; i < 3; i++)
                                           InkWell(
                                             onTap: () {
+                                              setInitState(() {
+                                                selectedBottomSheetFilter = i;
+                                              });
                                               setState(() {
                                                 selectedBottomSheetFilter = i;
                                               });
@@ -270,16 +269,20 @@ class _LeavesListViewState extends State<LeavesListView> {
                                       direction: Axis.horizontal,
                                       runAlignment: WrapAlignment.start,
                                       children: [
-                                        for (var i = 0; i < 2; i++)
+                                        for (var i = 0;
+                                            i < value.leaveTypes!.length + 1;
+                                            i++)
                                           InkWell(
                                             onTap: () {
+                                              setInitState(() {
+                                                filter = i;
+                                              });
                                               setState(() {
-                                                selectedBottomSheetTypeFilter =
-                                                    i;
+                                                filter = i;
                                               });
                                             },
                                             child: Container(
-                                              width: 110,
+                                              width: 150,
                                               // constraints: BoxConstraints.expand(),
                                               padding:
                                                   const EdgeInsets.symmetric(
@@ -287,33 +290,30 @@ class _LeavesListViewState extends State<LeavesListView> {
                                                 horizontal: 16,
                                               ),
                                               decoration: BoxDecoration(
-                                                color:
-                                                    selectedBottomSheetTypeFilter ==
-                                                            i
-                                                        ? AppColor.reBlue105F82
-                                                        : AppColor
-                                                            .reWhiteFFFFFF,
+                                                color: filter == i
+                                                    ? AppColor.reBlue105F82
+                                                    : AppColor.reWhiteFFFFFF,
                                                 borderRadius:
                                                     BorderRadius.circular(12),
-                                                border:
-                                                    selectedBottomSheetTypeFilter ==
-                                                            i
-                                                        ? null
-                                                        : Border.all(
-                                                            color: AppColor
-                                                                .reBlack1D1F1F
-                                                                .withOpacity(
-                                                                    .1),
-                                                            width: 1,
-                                                          ),
+                                                border: filter == i
+                                                    ? null
+                                                    : Border.all(
+                                                        color: AppColor
+                                                            .reBlack1D1F1F
+                                                            .withOpacity(.1),
+                                                        width: 1,
+                                                      ),
                                               ),
                                               child: Center(
                                                 child: Text(
-                                                  listType[i],
+                                                  i == 0
+                                                      ? 'الكل'
+                                                      : value.leaveTypes![i - 1]
+                                                          .leaveTypeName
+                                                          .toString(),
                                                   style: AppTextStyle.regular14
                                                       .copyWith(
-                                                          color: selectedBottomSheetTypeFilter ==
-                                                                  i
+                                                          color: filter == i
                                                               ? AppColor
                                                                   .reWhiteFFFFFF
                                                               : AppColor
@@ -327,30 +327,22 @@ class _LeavesListViewState extends State<LeavesListView> {
                                     const SizedBox(height: 28),
                                     Row(
                                       children: [
-                                        Container(
-                                          padding: const EdgeInsets.all(16),
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            border: Border.all(
-                                                color: AppColor.reBlue105F82),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              "Reset",
-                                              style: AppTextStyle.medium16
-                                                  .copyWith(
-                                                color: AppColor.reBlue105F82,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 8),
-                                        Expanded(
+                                        InkWell(
+                                          onTap: () {
+                                            setInitState(() {
+                                              filter = 0;
+                                              selectedBottomSheetFilter = null;
+                                            });
+                                            setState(() {
+                                              filter = 0;
+                                              selectedBottomSheetFilter = null;
+                                            });
+
+                                            context.router.pop();
+                                          },
                                           child: Container(
                                             padding: const EdgeInsets.all(16),
                                             decoration: BoxDecoration(
-                                              color: AppColor.reBlue105F82,
                                               borderRadius:
                                                   BorderRadius.circular(12),
                                               border: Border.all(
@@ -358,10 +350,39 @@ class _LeavesListViewState extends State<LeavesListView> {
                                             ),
                                             child: Center(
                                               child: Text(
-                                                "Apply",
+                                                "Reset",
                                                 style: AppTextStyle.medium16
                                                     .copyWith(
-                                                  color: AppColor.reWhiteFFFFFF,
+                                                  color: AppColor.reBlue105F82,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Expanded(
+                                          child: InkWell(
+                                            onTap: () {
+                                              context.router.pop();
+                                            },
+                                            child: Container(
+                                              padding: const EdgeInsets.all(16),
+                                              decoration: BoxDecoration(
+                                                color: AppColor.reBlue105F82,
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                border: Border.all(
+                                                    color:
+                                                        AppColor.reBlue105F82),
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  "Apply",
+                                                  style: AppTextStyle.medium16
+                                                      .copyWith(
+                                                    color:
+                                                        AppColor.reWhiteFFFFFF,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -434,11 +455,24 @@ class _LeavesListViewState extends State<LeavesListView> {
                   builder: (context) {
                     var filteredList;
                     if (filter != null && filter != 0) {
-                      filteredList = value.userLeaves!
-                          .where((e) =>
-                              e.leaveType ==
-                              value.leaveTypes![filter! - 1].leaveTypeName)
-                          .toList();
+                      filteredList = value.userLeaves!.where((e) {
+                        if (selectedBottomSheetFilter != null) {
+                          if (e.leaveType ==
+                                  value
+                                      .leaveTypes![filter! - 1].leaveTypeName &&
+                              e.status ==
+                                  listStatus[selectedBottomSheetFilter!]) {
+                            return true;
+                          } else {
+                            return false;
+                          }
+                        } else if (e.leaveType ==
+                            value.leaveTypes![filter! - 1].leaveTypeName) {
+                          return true;
+                        } else {
+                          return false;
+                        }
+                      }).toList();
                     } else {
                       filteredList = value.userLeaves!;
                     }
