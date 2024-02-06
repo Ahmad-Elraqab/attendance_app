@@ -14,6 +14,7 @@ class AppIcon {
   static String greenCheck = '$iconPath/check-green-c.svg';
   static String trash = '$iconPath/trash.svg';
   static String logout = '$iconPath/logout.svg';
+  static String flag = '$imagePath/ae.png';
   static String warning = '$iconPath/warning-2.svg';
   static String checkGreen = '$iconPath/check-green.svg';
   static String onsite = '$iconPath/onsite.svg';

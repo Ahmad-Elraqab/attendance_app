@@ -115,6 +115,18 @@ class _LoginViewState extends State<LoginView> {
                                       SnackbarMessageType.success,
                                     );
                                     context.router.replace(const MainView());
+                                    if (value.user!.mobileMacAddress == null) {
+                                      value.addMobile(
+                                        onSuccess: (val) {},
+                                        onError: (val) {
+                                          showSnackbar(
+                                              context,
+                                              'device already exist',
+                                              SnackbarMessageType.warning);
+                                          value.logout();
+                                        },
+                                      );
+                                    }
                                   },
                                   onError: (val) {
                                     showSnackbar(

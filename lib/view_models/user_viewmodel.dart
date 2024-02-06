@@ -2,6 +2,7 @@ import 'package:attendance_app/app/data_sources/remote/custom_dio_error.dart';
 import 'package:attendance_app/models/user_model.dart';
 import 'package:attendance_app/services/user_service.dart';
 import 'package:flutter/material.dart';
+import 'package:platform_device_id/platform_device_id.dart';
 
 class UserViewModel extends ChangeNotifier {
   UserViewModel({required this.service});
@@ -85,11 +86,12 @@ class UserViewModel extends ChangeNotifier {
       await validateForm(emailController.text, passwordController.text, onError,
           () async {
         loading = true;
-        final response = await service.login(
+        user = await service.login(
             username: emailController.text, password: passwordController.text);
-        onSuccess(response);
+        onSuccess("Login Successfully");
         loading = false;
       });
+      // onSuccess("");
     } catch (e) {
       loading = false;
       if (e is RestException) {
@@ -108,6 +110,26 @@ class UserViewModel extends ChangeNotifier {
   }
 
   Future<void> checkLogged() async {}
+
+  Future<void> addMobile(
+      {required Function onSuccess, required Function onError}) async {
+    try {
+      loading = true;
+      var deviceId = await PlatformDeviceId.getDeviceId;
+      service.addMobile(
+        email: user!.email.toString(),
+        macAddress: deviceId.toString(),
+      );
+      loading = false;
+    } catch (e) {
+      loading = false;
+      if (e is RestException) {
+        onError(e.responseMessage);
+      } else {
+        onError("something went wrong!");
+      }
+    }
+  }
 
   Future<void> resetPassword(
       {required String email, required String password}) async {

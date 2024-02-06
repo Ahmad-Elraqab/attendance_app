@@ -4,10 +4,7 @@ import 'package:attendance_app/app/data_sources/local_storage/auth_token_storage
 import 'package:attendance_app/app/data_sources/remote/rest_service.dart';
 import 'package:attendance_app/app/data_sources/shared_preferences_wrapper.dart';
 import 'package:attendance_app/models/user_model.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class UserService {
   UserService({
@@ -62,6 +59,26 @@ class UserService {
         final response = await restService.dio.get("/api/refreshToken");
 
         await localStorage.saveToken(response.data['data']);
+      }
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
+  Future<void> addMobile(
+      {required String email, required String macAddress}) async {
+    final token = await localStorage.getToken();
+
+    try {
+      if (token != null) {
+        final response = await restService.dio.get(
+            "/api/method/flow_branding.api.mobile_api.add_user_mobile?user=$email&mac_address=$macAddress&device_token");
+
+        if (response.statusCode == 200 || response.statusCode == 201) {
+        } else {
+          throw 'Device already exists';
+        }
       }
     } catch (e) {
       print(e);
