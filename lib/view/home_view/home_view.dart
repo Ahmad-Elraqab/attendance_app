@@ -1,9 +1,12 @@
 import 'package:attendance_app/app/app_extension/app_extensions.dart';
+import 'package:attendance_app/app/data_sources/local_storage/auth_token_storage.dart';
 import 'package:attendance_app/app/env/app_color.dart';
 import 'package:attendance_app/app/env/constants.dart';
 import 'package:attendance_app/app/env/text_style.dart';
+import 'package:attendance_app/app/router/router.gr.dart';
 import 'package:attendance_app/app/widgets/app_global_functions.dart';
 import 'package:attendance_app/app/widgets/custom_app_bar.dart';
+import 'package:attendance_app/view_models/attendance_viewmodel.dart';
 import 'package:attendance_app/view_models/leave_viewmodel.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -62,6 +65,30 @@ class _HomeViewState extends State<HomeView> {
                   const LeavesComponent(),
                   const SizedBox(height: 100),
                 ],
+              ),
+            ),
+          ),
+          Positioned(
+            right: 10,
+            bottom: 90,
+            child: InkWell(
+              onTap: () {
+                // context.router.root.push(const LeaveApplicationView());
+                context.read<AuthTokenStorage>().clear();
+                context.router.replace(const LoginView());
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: AppColor.reBlue105F82,
+                ),
+                child: Center(
+                    child: Text(
+                  "Logout",
+                  style: AppTextStyle.bold10
+                      .copyWith(color: AppColor.reWhiteFFFFFF),
+                )),
               ),
             ),
           ),
@@ -586,11 +613,18 @@ class AttendanceSlot extends StatelessWidget {
   }
 }
 
-class HomeWorkType extends StatelessWidget {
+class HomeWorkType extends StatefulWidget {
   const HomeWorkType({
     super.key,
   });
 
+  @override
+  State<HomeWorkType> createState() => _HomeWorkTypeState();
+}
+
+class _HomeWorkTypeState extends State<HomeWorkType> {
+  double opacity = 1;
+  bool called = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -894,115 +928,158 @@ class HomeWorkType extends StatelessWidget {
     );
   }
 
-  Column _buildCheckInBox() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Row(
-          children: [
-            Text(
-              "Work Type",
-              style:
-                  AppTextStyle.regular14.copyWith(color: AppColor.reGrey606060),
+  Widget _buildCheckInBox() {
+    return Consumer<AttendanceViewmodel>(
+      builder: (context, value, child) => Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            children: [
+              Text(
+                "Work Type",
+                style: AppTextStyle.regular14
+                    .copyWith(color: AppColor.reGrey606060),
+              ),
+              const Expanded(child: SizedBox()),
+              Container(
+                padding: const EdgeInsets.only(
+                    left: 8, top: 8, bottom: 8, right: 12),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: AppColor.rePrimary105F82,
+                ),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      AppIcon.home,
+                      height: 18,
+                      width: 18,
+                      color: AppColor.reWhiteFFFFFF,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      "Home",
+                      style: AppTextStyle.regular14
+                          .copyWith(color: AppColor.reWhiteFFFFFF),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  // color: AppColor.rePrimary105F82,
+                ),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      AppIcon.onsite,
+                      height: 18,
+                      width: 18,
+                      color: AppColor.reGreyA5A5A5,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      "Onsite",
+                      style: AppTextStyle.regular14
+                          .copyWith(color: AppColor.reGreyA5A5A5),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+          const SizedBox(height: 24),
+          Text(
+            "08:00:50 AM",
+            style: AppTextStyle.bold36.copyWith(
+              color: AppColor.reBlack1C1F26,
             ),
-            const Expanded(child: SizedBox()),
-            Container(
-              padding:
-                  const EdgeInsets.only(left: 8, top: 8, bottom: 8, right: 12),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                color: AppColor.rePrimary105F82,
-              ),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    AppIcon.home,
-                    height: 18,
-                    width: 18,
-                    color: AppColor.reWhiteFFFFFF,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    "Home",
-                    style: AppTextStyle.regular14
-                        .copyWith(color: AppColor.reWhiteFFFFFF),
-                  ),
-                ],
-              ),
+          ),
+          Text(
+            "Oct 26, 2023 - Wednesday",
+            style: AppTextStyle.regular14.copyWith(
+              color: AppColor.reGrey666666,
             ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                // color: AppColor.rePrimary105F82,
-              ),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    AppIcon.onsite,
-                    height: 18,
-                    width: 18,
-                    color: AppColor.reGreyA5A5A5,
+          ),
+          const SizedBox(height: 24),
+          AnimatedOpacity(
+            opacity: opacity,
+            onEnd: () {
+              if (called) onClick();
+            },
+            duration: const Duration(milliseconds: 700),
+            curve: Curves.linear,
+            child: InkWell(
+              onTap: () {
+                // onClick();
+                if (!called) {
+                  setState(() {
+                    called = true;
+                    opacity = 0.2;
+                  });
+                  value.checkIn(
+                    onError: (val) {
+                      showSnackbar(context, val, SnackbarMessageType.warning);
+                      setState(() {
+                        called = false;
+                        opacity = 1;
+                      });
+                    },
+                    onSuccess: (val) {
+                      showSnackbar(context, val, SnackbarMessageType.success);
+                      setState(() {
+                        called = false;
+                        opacity = 1;
+                      });
+                    },
+                  );
+                }
+              },
+              child: Container(
+                height: 120,
+                width: 120,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(60),
+                  color: AppColor.reBlue105F82.withOpacity(.1),
+                ),
+                child: Center(
+                  child: Container(
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: AppColor.reBlue105F82,
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Check in",
+                        style: AppTextStyle.medium16
+                            .copyWith(color: AppColor.reWhiteFFFFFF),
+                      ),
+                    ),
                   ),
-                  const SizedBox(width: 8),
-                  Text(
-                    "Onsite",
-                    style: AppTextStyle.regular14
-                        .copyWith(color: AppColor.reGreyA5A5A5),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-        const SizedBox(height: 24),
-        Text(
-          "08:00:50 AM",
-          style: AppTextStyle.bold36.copyWith(
-            color: AppColor.reBlack1C1F26,
-          ),
-        ),
-        Text(
-          "Oct 26, 2023 - Wednesday",
-          style: AppTextStyle.regular14.copyWith(
-            color: AppColor.reGrey666666,
-          ),
-        ),
-        const SizedBox(height: 24),
-        Container(
-          height: 120,
-          width: 120,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(60),
-            color: AppColor.reBlue105F82.withOpacity(.1),
-          ),
-          child: Center(
-            child: Container(
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                color: AppColor.reBlue105F82,
-              ),
-              child: Center(
-                child: Text(
-                  "Check in",
-                  style: AppTextStyle.medium16
-                      .copyWith(color: AppColor.reWhiteFFFFFF),
                 ),
               ),
             ),
           ),
-        ),
-        const SizedBox(height: 16),
-        Text(
-          "Check in and get started on your successful day.",
-          style: AppTextStyle.regular14.copyWith(
-            color: AppColor.reGrey666666,
-          ),
-        )
-      ],
+          const SizedBox(height: 16),
+          Text(
+            "Check in and get started on your successful day.",
+            style: AppTextStyle.regular14.copyWith(
+              color: AppColor.reGrey666666,
+            ),
+          )
+        ],
+      ),
     );
+  }
+
+  void onClick() {
+    setState(() {
+      opacity = opacity == 1 ? 0.2 : 1;
+    });
   }
 }
 

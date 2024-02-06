@@ -31,23 +31,33 @@ class _CalendarViewState extends State<CalendarView> {
         color: AppColor.reGreyBackground,
         child: Stack(
           children: [
-            SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 56),
-                  Text(
-                    "Attendance",
-                    style: AppTextStyle.bold18.copyWith(
-                      color: AppColor.reBlack1C1F26,
+            RefreshIndicator.adaptive(
+              onRefresh: () async {
+                context
+                    .read<LeaveViewmodel>()
+                    .getLeaveTypes(onError: (val) {}, onSuccess: (val) {});
+                context
+                    .read<LeaveViewmodel>()
+                    .getLeaves(onError: (val) {}, onSuccess: (val) {});
+              },
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 56),
+                    Text(
+                      "Attendance",
+                      style: AppTextStyle.bold18.copyWith(
+                        color: AppColor.reBlack1C1F26,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 14.5),
-                  const LeavesComponent(),
-                  const SizedBox(height: 16),
-                  const LeavesListView(),
-                  const SizedBox(height: bottomNavigationHeight),
-                ],
+                    const SizedBox(height: 14.5),
+                    const LeavesComponent(),
+                    const SizedBox(height: 16),
+                    const LeavesListView(),
+                    const SizedBox(height: bottomNavigationHeight),
+                  ],
+                ),
               ),
             ),
             Positioned(
