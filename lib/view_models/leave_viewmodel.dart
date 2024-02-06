@@ -3,6 +3,7 @@ import 'package:attendance_app/models/leave_model.dart';
 import 'package:attendance_app/models/leave_type_model.dart';
 import 'package:attendance_app/services/leave_service.dart';
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart' as dt;
 
 class LeaveViewmodel extends ChangeNotifier {
   LeaveViewmodel({required this.service});
@@ -58,6 +59,35 @@ class LeaveViewmodel extends ChangeNotifier {
       leaveTypes = await service.getLeaveTypes();
 
       loading = false;
+    } catch (e) {
+      loading = false;
+      if (e is RestException) {
+        onError(e.responseMessage);
+      } else {
+        onError("something went wrong!");
+      }
+    }
+  }
+
+  Future<void> createLeave({
+    required DateTime startDate,
+    required DateTime endDate,
+    required String type,
+    required Function onError,
+    required Function onSuccess,
+  }) async {
+    try {
+      loading = true;
+
+      var responseMsg = await service.createLeave(
+        endDate: dt.DateFormat("dd-MM-yyyy").format(endDate).toString(),
+        startDate: dt.DateFormat("dd-MM-yyyy").format(startDate).toString(),
+        type: type,
+      );
+
+      loading = false;
+
+      onSuccess(responseMsg);
     } catch (e) {
       loading = false;
       if (e is RestException) {

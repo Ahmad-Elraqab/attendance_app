@@ -52,4 +52,25 @@ class LeaveService {
       rethrow;
     }
   }
+
+  Future<String> createLeave(
+      {required String startDate,
+      required String endDate,
+      required String type}) async {
+    try {
+      final token = await localStorage.getToken();
+
+      final response = await restService.dio.post(
+          '/api/method/flow_branding.api.mobile_api.create_leave_application?sid=$token&leave_type=$type&from_date=$startDate&to_date=$endDate');
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // print(response.data['message']);
+
+        return response.data['message']['msg'];
+      } else {
+        throw response.data['message']['msg'];
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
