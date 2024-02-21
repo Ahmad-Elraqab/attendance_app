@@ -114,3 +114,26 @@ String getMonth(index) => [
       'November',
       'December'
     ][index];
+String getMonthShort(index) => [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ][index];
+String getWeekDay(index) => [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ][index];

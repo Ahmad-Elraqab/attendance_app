@@ -21,18 +21,7 @@ class AppInterceptors extends QueuedInterceptor {
   @override
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    if (options.path.contains("api/booking/newUser")) {
-      return handler.next(options);
-    } else {
-      final AuthTokenStorage localStorage =
-          AuthTokenSecureStorage(const FlutterSecureStorage());
-
-      final token = await localStorage.getToken();
-
-      options.headers['Authorization'] = 'Bearer $token';
-      // print(token);
-      return handler.next(options);
-    }
+    return handler.next(options);
   }
 
   @override

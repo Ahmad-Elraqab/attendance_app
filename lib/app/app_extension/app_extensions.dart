@@ -30,7 +30,6 @@ extension TextFormField on TextField {
           controller: controller,
           focusNode: focusNode,
           textAlignVertical: TextAlignVertical.center,
-          scrollPadding: EdgeInsets.zero,
           decoration: InputDecoration(
             border: border,
             errorBorder: border,
@@ -157,7 +156,6 @@ extension TextFormField on TextField {
     Function? onSecure,
     Function? onChange,
     FocusNode? focusNode,
-    EdgeInsets? scrollPadding,
     TextEditingController? controller,
   }) {
     final border = OutlineInputBorder(
@@ -171,7 +169,6 @@ extension TextFormField on TextField {
       controller: controller,
       focusNode: focusNode,
       onChanged: (val) => onChange != null ? onChange(val) : null,
-      scrollPadding: scrollPadding ?? const EdgeInsets.all(20),
       decoration: InputDecoration(
         border: border,
         errorBorder: border,
@@ -347,25 +344,22 @@ extension ContainerButtons on Container {
     required String label,
     TextStyle? appTextStyle,
   }) {
-    return InkWell(
-      onTap: () => onTap!(),
-      child: Container(
-        height: height,
-        decoration: BoxDecoration(
-          color: color ?? AppColor.reWhiteFFFFFF,
-          border: Border.all(color: borderColor ?? AppColor.reBlack393939),
-          borderRadius: BorderRadius.circular(radius ?? 8),
-        ),
-        padding: EdgeInsets.symmetric(
-            vertical: verticalPadding ?? 4, horizontal: horizontalPadding ?? 4),
-        child: Center(
-          child: Text(
-            label,
-            style: appTextStyle ??
-                AppTextStyle.medium20.copyWith(
-                  color: AppColor.reBlack393939,
-                ),
-          ),
+    return Container(
+      height: height,
+      decoration: BoxDecoration(
+        color: color ?? AppColor.reWhiteFFFFFF,
+        border: Border.all(color: borderColor ?? AppColor.reBlack393939),
+        borderRadius: BorderRadius.circular(radius ?? 8),
+      ),
+      padding: EdgeInsets.symmetric(
+          vertical: verticalPadding ?? 4, horizontal: horizontalPadding ?? 4),
+      child: Center(
+        child: Text(
+          label,
+          style: appTextStyle ??
+              AppTextStyle.medium20.copyWith(
+                color: AppColor.reBlack393939,
+              ),
         ),
       ),
     );

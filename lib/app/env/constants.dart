@@ -26,6 +26,7 @@ class AppIcon {
   static String profileMock = '$imagePath/profile_mock.png';
   static String logoSmall = '$imagePath/logo-small.png';
   static String logoLarge = '$imagePath/logo-large.png';
+  static String logoExtraLarge = '$imagePath/logo-extra-large.png';
   static String profileImage = '$imagePath/profile_image.png';
   static String clock = '$iconPath/clock.svg';
   static String close = '$iconPath/Close.svg';

@@ -18,132 +18,152 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  bool secure = false;
+  bool secure = true;
 
   @override
   Widget build(BuildContext context) {
     return Consumer<UserViewModel>(
       builder: (context, value, child) => Scaffold(
         backgroundColor: AppColor.reWhiteFFFFFF,
-        body: SizedBox(
-          height: MediaQuery.sizeOf(context).height,
-          width: MediaQuery.sizeOf(context).width,
-          child: Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(top: 108),
-                child: Image.asset(
-                  AppIcon.logoSmall,
-                  height: 158,
-                  width: 118,
-                ),
-              ),
-              Positioned(
-                top: -80,
-                left: 30,
-                child: Image.asset(
-                  AppIcon.logoLarge,
-                  height: 457,
-                  width: 341,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Expanded(child: SizedBox()),
-                    Text(
-                      "Flow ERB",
-                      style: AppTextStyle.bold36.copyWith(
-                        color: AppColor.reBlack1C1F26,
+        body: SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.sizeOf(context).height,
+            width: MediaQuery.sizeOf(context).width,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: Stack(
+                    alignment: Alignment.topCenter,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: MediaQuery.sizeOf(context).height * .25),
+                        child: Image.asset(
+                          AppIcon.logoSmall,
+                          height: 158,
+                          width: 118,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      "Login to enjoy the full services provided by the Flow ERB",
-                      style: AppTextStyle.regular14.copyWith(
-                        color: AppColor.reGrey666666,
+                      Positioned(
+                        top: -(MediaQuery.sizeOf(context).height * .05),
+                        left: 30,
+                        child: Image.asset(
+                          AppIcon.logoExtraLarge,
+                          height: 457,
+                          width: 341,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 24),
-                    const TextField().formTextField(
-                      label: 'Server URL',
-                      actionIcon: AppIcon.archiveAdd,
-                      controller: value.serverUrl,
-                      onAction: () {},
-                    ),
-                    const SizedBox(height: 16),
-                    const TextField().formTextField(
-                      label: 'Email',
-                      controller: value.emailController,
-                    ),
-                    const SizedBox(height: 16),
-                    const TextField().formTextField(
-                        label: 'Password',
-                        controller: value.passwordController,
-                        secure: secure,
-                        onSecure: () {
-                          setState(() {
-                            secure = !secure;
-                          });
-                        }),
-                    const SizedBox(height: 24),
-                    value.loading
-                        ? const SizedBox(
-                            height: 57,
-                            child: Center(
-                              child: CircularProgressIndicator.adaptive(),
-                            ),
-                          )
-                        : Center(
-                            child: Container().labelButton(
-                              label: 'Login',
-                              appTextStyle: AppTextStyle.medium16.copyWith(
-                                color: AppColor.reWhiteFFFFFF,
-                              ),
-                              color: AppColor.reBlue105F82,
-                              verticalPadding: 16,
-                              radius: 12,
-                              onTap: () async {
-                                await value.login(
-                                  onSuccess: (val) {
-                                    showSnackbar(
-                                      context,
-                                      "Login successfully",
-                                      SnackbarMessageType.success,
-                                    );
-                                    context.router.replace(const MainView());
-                                    if (value.user!.mobileMacAddress == null) {
-                                      value.addMobile(
-                                        onSuccess: (val) {},
-                                        onError: (val) {
-                                          showSnackbar(
-                                              context,
-                                              'device already exist',
-                                              SnackbarMessageType.warning);
-                                          value.logout();
-                                        },
-                                      );
-                                    }
-                                  },
-                                  onError: (val) {
-                                    showSnackbar(
-                                      context,
-                                      val,
-                                      SnackbarMessageType.warning,
-                                    );
-                                  },
-                                );
-                              },
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: SizedBox(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Expanded(child: SizedBox()),
+                          Text(
+                            "Flow ERP",
+                            style: AppTextStyle.bold36.copyWith(
+                              color: AppColor.reBlack1C1F26,
                             ),
                           ),
-                    const SizedBox(height: 56),
-                  ],
+                          const SizedBox(height: 4),
+                          Text(
+                            "Login to enjoy the full services provided by the Flow ERP",
+                            style: AppTextStyle.regular14.copyWith(
+                              color: AppColor.reGrey666666,
+                            ),
+                          ),
+                          // const SizedBox(height: 24),
+                          // const TextField().formTextField(
+                          //   label: 'Server URL',
+                          //   actionIcon: AppIcon.archiveAdd,
+                          //   controller: value.serverUrl,
+                          //   onAction: () {},
+                          // ),
+                          const SizedBox(height: 16),
+                          const TextField().formTextField(
+                            label: 'Email',
+                            controller: value.emailController,
+                          ),
+                          const SizedBox(height: 16),
+                          const TextField().formTextField(
+                              label: 'Password',
+                              controller: value.passwordController,
+                              secure: secure,
+                              onSecure: () {
+                                setState(() {
+                                  secure = !secure;
+                                });
+                              }),
+                          const SizedBox(height: 24),
+                          value.loading
+                              ? const SizedBox(
+                                  height: 57,
+                                  child: Center(
+                                    child: CircularProgressIndicator.adaptive(),
+                                  ),
+                                )
+                              : Center(
+                                  child: Container().labelButton(
+                                    label: 'Login',
+                                    appTextStyle:
+                                        AppTextStyle.medium16.copyWith(
+                                      color: AppColor.reWhiteFFFFFF,
+                                    ),
+                                    color: AppColor.reBlue105F82,
+                                    verticalPadding: 16,
+                                    radius: 12,
+                                    onTap: () async {
+                                      await value.login(
+                                        onSuccess: (val) {
+                                          showSnackbar(
+                                            context,
+                                            "Login successfully",
+                                            SnackbarMessageType.success,
+                                          );
+                                          context.router
+                                              .replace(const MainView());
+                                          if (value.user != null) {
+                                            if (value.user!.mobileMacAddress ==
+                                                null) {
+                                              value.addMobile(
+                                                onSuccess: (val) {},
+                                                onError: (val) {
+                                                  showSnackbar(
+                                                      context,
+                                                      'device already exist',
+                                                      SnackbarMessageType
+                                                          .warning);
+                                                  value.logout();
+                                                },
+                                              );
+                                            }
+                                          }
+                                        },
+                                        onError: (val) {
+                                          showSnackbar(
+                                            context,
+                                            val,
+                                            SnackbarMessageType.warning,
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                          const SizedBox(height: 56),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

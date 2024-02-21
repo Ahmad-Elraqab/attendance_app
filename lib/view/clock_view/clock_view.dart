@@ -1,7 +1,8 @@
 import 'package:attendance_app/app/env/app_color.dart';
 import 'package:attendance_app/app/env/constants.dart';
 import 'package:attendance_app/app/env/text_style.dart';
-import 'package:attendance_app/view/home_view/home_view.dart';
+import 'package:attendance_app/app/widgets/attendance_grid_view.dart';
+import 'package:attendance_app/app/widgets/attendance_slot.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';

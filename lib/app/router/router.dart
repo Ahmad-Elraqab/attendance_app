@@ -59,22 +59,27 @@ class AppRouter extends $AppRouter {
               initial: true,
               page: HomeView.page,
               path: 'home',
+              maintainState: false,
             ),
             AutoRoute(
               page: ClockView.page,
               path: 'clock',
+              maintainState: false,
             ),
             AutoRoute(
               page: CalendarView.page,
               path: 'calendar',
+              maintainState: false,
             ),
             AutoRoute(
               page: MoneyView.page,
               path: 'money',
+              maintainState: false,
             ),
             AutoRoute(
               page: NotificationView.page,
               path: 'notification',
+              maintainState: false,
             ),
           ],
         ),

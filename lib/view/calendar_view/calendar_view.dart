@@ -1,11 +1,9 @@
-import 'dart:math';
-
 import 'package:attendance_app/app/env/app_color.dart';
 import 'package:attendance_app/app/env/constants.dart';
 import 'package:attendance_app/app/env/text_style.dart';
 import 'package:attendance_app/app/router/router.gr.dart';
 import 'package:attendance_app/app/widgets/app_global_functions.dart';
-import 'package:attendance_app/view/home_view/home_view.dart';
+import 'package:attendance_app/app/widgets/leave_component.dart';
 import 'package:attendance_app/view_models/leave_viewmodel.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -425,7 +423,6 @@ class _LeavesListViewState extends State<LeavesListView> {
                   child: ListView.builder(
                     itemCount: value.leaveTypes!.length + 1,
                     scrollDirection: Axis.horizontal,
-                    itemExtent: 106,
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
@@ -434,13 +431,13 @@ class _LeavesListViewState extends State<LeavesListView> {
                           });
                         },
                         child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 25),
                           decoration: BoxDecoration(
                             color: filter == index
                                 ? AppColor.reBlue105F82
                                 : AppColor.reTransparent,
                             borderRadius: BorderRadius.circular(100),
                           ),
-                          width: 106,
                           height: 37,
                           child: Center(
                             child: Text(

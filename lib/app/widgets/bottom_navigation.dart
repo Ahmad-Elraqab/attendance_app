@@ -31,13 +31,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
           border: Border(
             top: BorderSide(
               width: 1,
-              color: AppColor.reGreyD7D7D7,
+              color: AppColor.reWhiteFFFFFF,
             ),
           ),
           color: AppColor.reWhiteFFFFFF,
         ),
         width: widget.width,
-        height: 80,
+        height: 56,
         // margin: const EdgeInsets.only(bottom: 32),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,

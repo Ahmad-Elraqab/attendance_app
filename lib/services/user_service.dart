@@ -51,6 +51,15 @@ class UserService {
     }
   }
 
+  Future<void> logout() async {
+    try {
+      await localStorage.clear();
+      await restService.dio.post("/api/method/logout?all_session=1");
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<void> refreshToken() async {
     final token = await localStorage.getToken();
 
@@ -84,9 +93,5 @@ class UserService {
       print(e);
       rethrow;
     }
-  }
-
-  Future<void> logout() async {
-    await localStorage.clear();
   }
 }

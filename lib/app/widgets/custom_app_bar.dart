@@ -1,9 +1,7 @@
 import 'package:attendance_app/app/env/app_color.dart';
 import 'package:attendance_app/app/env/constants.dart';
 import 'package:attendance_app/app/env/text_style.dart';
-import 'package:attendance_app/app/router/router.gr.dart';
 import 'package:attendance_app/view_models/user_viewmodel.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +26,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
         child: Container(
           color: AppColor.rePrimary105F82,
           width: widget.width,
-          height: 192,
+          height: 160,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,

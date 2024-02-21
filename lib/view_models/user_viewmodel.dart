@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:attendance_app/app/data_sources/remote/custom_dio_error.dart';
 import 'package:attendance_app/models/user_model.dart';
 import 'package:attendance_app/services/user_service.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:platform_device_id/platform_device_id.dart';
 
 class UserViewModel extends ChangeNotifier {
   UserViewModel({required this.service});
@@ -88,6 +90,8 @@ class UserViewModel extends ChangeNotifier {
         loading = true;
         user = await service.login(
             username: emailController.text, password: passwordController.text);
+
+        notifyListeners();
         onSuccess("Login Successfully");
         loading = false;
       });
@@ -115,7 +119,7 @@ class UserViewModel extends ChangeNotifier {
       {required Function onSuccess, required Function onError}) async {
     try {
       loading = true;
-      var deviceId = await PlatformDeviceId.getDeviceId;
+      var deviceId = await _getId();
       service.addMobile(
         email: user!.email.toString(),
         macAddress: deviceId.toString(),
@@ -134,5 +138,16 @@ class UserViewModel extends ChangeNotifier {
   Future<void> resetPassword(
       {required String email, required String password}) async {
     // service.resetPassword(password: password, email: email);
+  }
+  Future<String?> _getId() async {
+    var deviceInfo = DeviceInfoPlugin();
+    if (Platform.isIOS) {
+      // import 'dart:io'
+      var iosDeviceInfo = await deviceInfo.iosInfo;
+      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+    } else if (Platform.isAndroid) {
+      var androidDeviceInfo = await deviceInfo.androidInfo;
+      return androidDeviceInfo.id; // unique ID on Android
+    }
   }
 }
