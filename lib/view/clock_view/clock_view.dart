@@ -181,10 +181,12 @@ class _ClockViewState extends State<ClockView> {
                                                   right: 8),
                                               child: Center(
                                                 child: Text.rich(
+                                                  textAlign: TextAlign.center,
                                                   TextSpan(
                                                     children: [
                                                       TextSpan(
-                                                        text: ' 0$i\n',
+                                                        text:
+                                                            '${value.attendance![i].attendanceDate!.day.toString().padLeft(2, '0')}\n',
                                                         style: AppTextStyle
                                                             .regular14
                                                             .copyWith(
@@ -193,7 +195,12 @@ class _ClockViewState extends State<ClockView> {
                                                         ),
                                                       ),
                                                       TextSpan(
-                                                        text: 'SUN',
+                                                        text: getWeekDay(value
+                                                                .attendance![i]
+                                                                .attendanceDate!
+                                                                .weekday)
+                                                            .substring(0, 3)
+                                                            .toUpperCase(),
                                                         style: AppTextStyle
                                                             .regular12
                                                             .copyWith(

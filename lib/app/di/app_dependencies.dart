@@ -7,9 +7,11 @@ import 'package:attendance_app/app/data_sources/shared_preferences_wrapper.dart'
 import 'package:attendance_app/app/env/env.dart';
 import 'package:attendance_app/services/attendance_service.dart';
 import 'package:attendance_app/services/leave_service.dart';
+import 'package:attendance_app/services/salary_service.dart';
 import 'package:attendance_app/services/user_service.dart';
 import 'package:attendance_app/view_models/attendance_viewmodel.dart';
 import 'package:attendance_app/view_models/leave_viewmodel.dart';
+import 'package:attendance_app/view_models/salary_viewmodel.dart';
 import 'package:attendance_app/view_models/user_viewmodel.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -63,6 +65,11 @@ class AppDependencies {
             service: context.read(),
           ),
         ),
+        ChangeNotifierProvider<SalaryViewmodel>(
+          create: (context) => SalaryViewmodel(
+            service: context.read(),
+          ),
+        ),
       ];
   List<Provider> get _analytics => [];
   List<Provider> get _httpClients => [
@@ -86,6 +93,12 @@ class AppDependencies {
         ),
         Provider<AttendanceService>(
           create: (context) => AttendanceService(
+            localStorage: context.read(),
+            restService: context.read(),
+          ),
+        ),
+        Provider<SalaryService>(
+          create: (context) => SalaryService(
             localStorage: context.read(),
             restService: context.read(),
           ),
