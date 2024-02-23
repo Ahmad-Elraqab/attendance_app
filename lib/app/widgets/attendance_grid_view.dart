@@ -1,20 +1,43 @@
 import 'package:attendance_app/app/env/app_color.dart';
 import 'package:attendance_app/app/env/text_style.dart';
+import 'package:attendance_app/models/attendance_model.dart';
 import 'package:flutter/widgets.dart';
 
-class AttendanceGridView extends StatelessWidget {
-  const AttendanceGridView({super.key});
+class AttendanceGridView extends StatefulWidget {
+  const AttendanceGridView({super.key, required this.attendance});
+
+  final List<AttendanceModel> attendance;
+
+  @override
+  State<AttendanceGridView> createState() => _AttendanceGridViewState();
+}
+
+class _AttendanceGridViewState extends State<AttendanceGridView> {
+  @override
+  void initState() {
+    final earlyLeaves = widget.attendance.map((e) => e.earlyExit == 1).length;
+    final lateEntry = widget.attendance.map((e) => e.lateEntry == 1).length;
+    final present = widget.attendance.map((e) => e.status == "Present").length;
+    final absents = widget.attendance.map((e) => e.status == "Absent").length;
+    titles = [
+      earlyLeaves.toString(),
+      absents.toString(),
+      lateEntry.toString(),
+      present.toString(),
+    ];
+    super.initState();
+  }
+
+  List titles = ['-', '-', '-', '-'];
+  final desc = ['Early Leaves', 'Absents', 'Late In', 'Leaves'];
+  final colors = [
+    AppColor.rePurple6A6AF6,
+    AppColor.reBlue105F82,
+    AppColor.reRedFF3B30,
+    AppColor.reYellowFF9500
+  ];
   @override
   Widget build(BuildContext context) {
-    final titles = ['02', '05', '0', '08'];
-    final desc = ['Early Leaves', 'Absents', 'Late In', 'Leaves'];
-    final colors = [
-      AppColor.rePurple6A6AF6,
-      AppColor.reBlue105F82,
-      AppColor.reRedFF3B30,
-      AppColor.reYellowFF9500
-    ];
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

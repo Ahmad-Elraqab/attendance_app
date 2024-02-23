@@ -1,4 +1,5 @@
 import 'package:attendance_app/app/data_sources/remote/custom_dio_error.dart';
+import 'package:attendance_app/models/attendance_model.dart';
 import 'package:attendance_app/models/attendance_status_model.dart';
 import 'package:attendance_app/services/attendance_service.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class AttendanceViewmodel extends ChangeNotifier {
   }
 
   AttendanceStatusModel? statusModel;
+  List<AttendanceModel>? attendance;
 
   Future<void> checkIn({
     required Function onError,
@@ -120,6 +122,22 @@ class AttendanceViewmodel extends ChangeNotifier {
       return currentLocation!;
     } catch (e) {
       return null;
+    }
+  }
+
+  Future<void> getAttendance({
+    required Function onError,
+    required Function onSuccess,
+  }) async {
+    loading = false;
+    try {
+      loading = true;
+
+      attendance = await service.getAttendance();
+
+      loading = false;
+    } catch (e) {
+      onError("something went wrong!");
     }
   }
 }

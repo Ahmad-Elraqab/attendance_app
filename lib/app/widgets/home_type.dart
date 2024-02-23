@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:attendance_app/app/app_extension/app_extensions.dart';
 import 'package:attendance_app/app/env/app_color.dart';
 import 'package:attendance_app/app/env/constants.dart';
@@ -49,14 +47,14 @@ class _HomeWorkTypeState extends State<HomeWorkType> {
       onSuccess: (val) {},
     );
     if (type == AttendanceLogType.IN) {
-      readPeriodsFromLocal();
+      readPeriodsFromLocal(type);
       startTime();
     } else {
       duration = const Duration();
     }
   }
 
-  Future<void> readPeriodsFromLocal() async {
+  Future<void> readPeriodsFromLocal(type) async {
     final data =
         await context.read<FlutterSecureStorage>().read(key: 'periods');
     final response = data ?? '';
@@ -64,13 +62,7 @@ class _HomeWorkTypeState extends State<HomeWorkType> {
     if (response == '') {
       duration = const Duration();
     } else {
-      print("response");
-      print(response);
       List<String> timeParts = response.split(':');
-      print("timeParts");
-      timeParts.forEach((element) {
-        print(element);
-      });
 
       duration = period = Duration(
         hours: int.parse(timeParts[0]),
@@ -79,6 +71,18 @@ class _HomeWorkTypeState extends State<HomeWorkType> {
           double.parse(timeParts[2]).floor().toString(),
         ),
       );
+      if (type == AttendanceLogType.IN) {
+        final kill =
+            await context.read<FlutterSecureStorage>().read(key: 'kill');
+
+        if (kill != null) {
+          print("time diff");
+          print(DateTime.now().difference(DateTime.parse(kill)));
+          duration = period = Duration(
+              seconds: duration!.inSeconds +
+                  DateTime.now().difference(DateTime.parse(kill)).inSeconds);
+        }
+      }
     }
   }
 
@@ -120,9 +124,11 @@ class _HomeWorkTypeState extends State<HomeWorkType> {
 
   @override
   void dispose() {
-    timer!.cancel();
+    timer?.cancel();
     const FlutterSecureStorage()
         .write(key: 'periods', value: duration.toString());
+    const FlutterSecureStorage()
+        .write(key: 'kill', value: DateTime.now().toString());
     super.dispose();
   }
 
@@ -440,9 +446,7 @@ class _HomeWorkTypeState extends State<HomeWorkType> {
                               key: 'periods',
                               value: duration.toString(),
                             )
-                            .whenComplete(() {
-                          print("saved $duration");
-                        });
+                            .whenComplete(() {});
                       },
                     );
                   },
@@ -621,7 +625,7 @@ class _HomeWorkTypeState extends State<HomeWorkType> {
                     onError: (val) {},
                     onSuccess: (val) {},
                   );
-                  readPeriodsFromLocal();
+                  readPeriodsFromLocal(AttendanceLogType.OUT);
                   startTime();
                 },
               );
@@ -717,7 +721,6 @@ class _ClickableWidgetState extends State<ClickableWidget> {
       canCheckBiometrics = await auth.canCheckBiometrics;
     } on PlatformException catch (e) {
       canCheckBiometrics = false;
-      print(e);
     }
     if (!mounted) {
       return;
@@ -734,7 +737,6 @@ class _ClickableWidgetState extends State<ClickableWidget> {
       availableBiometrics = await auth.getAvailableBiometrics();
     } on PlatformException catch (e) {
       availableBiometrics = <BiometricType>[];
-      print(e);
     }
     if (!mounted) {
       return;
@@ -774,7 +776,6 @@ class _ClickableWidgetState extends State<ClickableWidget> {
             _authorized = authenticated ? 'Authorized' : 'Not Authorized');
       }
     } on PlatformException catch (e) {
-      print(e);
       setState(() {
         _isAuthenticating = false;
         _authorized = 'Error - ${e.message}';

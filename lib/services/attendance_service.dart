@@ -1,5 +1,6 @@
 import 'package:attendance_app/app/data_sources/local_storage/auth_token_storage.dart';
 import 'package:attendance_app/app/data_sources/remote/rest_service.dart';
+import 'package:attendance_app/models/attendance_model.dart';
 import 'package:attendance_app/models/attendance_status_model.dart';
 import 'package:dio/dio.dart';
 
@@ -53,6 +54,29 @@ class AttendanceService {
             AttendanceStatusModel.fromJson(response.data['message']);
         return attendanceStatus;
       }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<AttendanceModel>?> getAttendance() async {
+    try {
+      final token = await localStorage.getToken();
+
+      var headers = {'Cookie': 'sid=$token;'};
+
+      final response = await restService.dio.get(
+        'https://dev.qatarat-alnada.com/api/method/flow_branding.api.mobile_api.get_attendance_list_by_user',
+        options: Options(
+          method: 'GET',
+          headers: headers,
+        ),
+      );
+
+      final attendance = (response.data['message'] as List)
+          .map((e) => AttendanceModel.fromJson(e))
+          .toList();
+      return attendance;
     } catch (e) {
       rethrow;
     }

@@ -24,6 +24,17 @@ class MainView extends StatefulWidget {
 class _MainViewState extends State<MainView> {
   @override
   void initState() {
+    context.read<UserViewModel>().checkToken(
+      onError: (val) {
+        context.router.pushAndPopUntil(
+          LoginView(),
+          predicate: (route) => route.settings.name == 'Main',
+        );
+      },
+      onSuccess: (val) {
+        print("Valid session");
+      },
+    );
     checkSession();
     super.initState();
   }

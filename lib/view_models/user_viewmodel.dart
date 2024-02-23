@@ -80,6 +80,23 @@ class UserViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> checkToken({
+    required Function onSuccess,
+    required Function onError,
+  }) async {
+    try {
+      await service.checkToken();
+      onSuccess('');
+    } catch (e) {
+      loading = false;
+      if (e is RestException) {
+        onError(e.responseMessage);
+      } else {
+        onError("something went wrong!");
+      }
+    }
+  }
+
   Future<void> login({
     required Function onSuccess,
     required Function onError,

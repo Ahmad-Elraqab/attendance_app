@@ -109,15 +109,7 @@ class _LoginViewState extends State<LoginView> {
                                   ),
                                 )
                               : Center(
-                                  child: Container().labelButton(
-                                    label: 'Login',
-                                    appTextStyle:
-                                        AppTextStyle.medium16.copyWith(
-                                      color: AppColor.reWhiteFFFFFF,
-                                    ),
-                                    color: AppColor.reBlue105F82,
-                                    verticalPadding: 16,
-                                    radius: 12,
+                                  child: InkWell(
                                     onTap: () async {
                                       await value.login(
                                         onSuccess: (val) {
@@ -154,6 +146,17 @@ class _LoginViewState extends State<LoginView> {
                                         },
                                       );
                                     },
+                                    child: Container().labelButton(
+                                      label: 'Login',
+                                      appTextStyle:
+                                          AppTextStyle.medium16.copyWith(
+                                        color: AppColor.reWhiteFFFFFF,
+                                      ),
+                                      color: AppColor.reBlue105F82,
+                                      verticalPadding: 16,
+                                      radius: 12,
+                                      onTap: () async {},
+                                    ),
                                   ),
                                 ),
                           const SizedBox(height: 56),

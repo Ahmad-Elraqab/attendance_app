@@ -40,7 +40,7 @@ class AttendanceComponent extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          AttendanceGridView(),
+          // AttendanceGridView(),
           const SizedBox(height: 8),
           Text(
             "Last 5 days, attended",

@@ -1,7 +1,9 @@
 import 'package:attendance_app/app/env/app_color.dart';
 import 'package:attendance_app/app/env/constants.dart';
 import 'package:attendance_app/app/env/text_style.dart';
+import 'package:attendance_app/app/router/router.gr.dart';
 import 'package:attendance_app/view_models/user_viewmodel.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -54,10 +56,21 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   ],
                 ),
               ),
-              CircleAvatar(
-                radius: 24,
-                backgroundColor: AppColor.reWhiteFFFFFF,
-                backgroundImage: AssetImage(AppIcon.profileMock),
+              InkWell(
+                onTap: () {
+                  context.read<UserViewModel>().logout();
+                  context.router.pushAndPopUntil(
+                    const LoginView(),
+                    predicate: (route) {
+                      return route.settings.name == 'Main';
+                    },
+                  );
+                },
+                child: CircleAvatar(
+                  radius: 24,
+                  backgroundColor: AppColor.reWhiteFFFFFF,
+                  backgroundImage: AssetImage(AppIcon.profileMock),
+                ),
               ),
             ],
           ),

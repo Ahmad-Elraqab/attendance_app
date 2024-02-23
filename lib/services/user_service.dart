@@ -4,6 +4,7 @@ import 'package:attendance_app/app/data_sources/local_storage/auth_token_storage
 import 'package:attendance_app/app/data_sources/remote/rest_service.dart';
 import 'package:attendance_app/app/data_sources/shared_preferences_wrapper.dart';
 import 'package:attendance_app/models/user_model.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class UserService {
@@ -25,6 +26,31 @@ class UserService {
       return true;
     } else {
       return false;
+    }
+  }
+
+  Future<bool> checkToken() async {
+    try {
+      final token = await localStorage.getToken();
+
+      var headers = {'Cookie': 'sid=$token;'};
+
+      final response = await restService.dio.get(
+        'https://dev.qatarat-alnada.com/api/method/flow_branding.api.mobile_api.get_attendance_list_by_user',
+        options: Options(
+          method: 'GET',
+          headers: headers,
+        ),
+      );
+
+      if (response.statusCode != 200) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (e) {
+      // print(e);
+      rethrow;
     }
   }
 

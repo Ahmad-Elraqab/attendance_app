@@ -4,6 +4,7 @@ import 'package:attendance_app/app/env/text_style.dart';
 import 'package:attendance_app/app/router/router.gr.dart';
 import 'package:attendance_app/app/widgets/app_global_functions.dart';
 import 'package:attendance_app/app/widgets/leave_component.dart';
+import 'package:attendance_app/view_models/attendance_viewmodel.dart';
 import 'package:attendance_app/view_models/leave_viewmodel.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,15 @@ class CalendarView extends StatefulWidget {
 
 class _CalendarViewState extends State<CalendarView> {
   @override
+  void initState() {
+    context.read<AttendanceViewmodel>().getAttendance(
+          onError: (val) {},
+          onSuccess: (val) {},
+        );
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -29,34 +39,45 @@ class _CalendarViewState extends State<CalendarView> {
         color: AppColor.reGreyBackground,
         child: Stack(
           children: [
-            RefreshIndicator.adaptive(
-              onRefresh: () async {
-                context
-                    .read<LeaveViewmodel>()
-                    .getLeaveTypes(onError: (val) {}, onSuccess: (val) {});
-                context
-                    .read<LeaveViewmodel>()
-                    .getLeaves(onError: (val) {}, onSuccess: (val) {});
-              },
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 56),
-                    Text(
-                      "Attendance",
-                      style: AppTextStyle.bold18.copyWith(
-                        color: AppColor.reBlack1C1F26,
-                      ),
-                    ),
-                    const SizedBox(height: 14.5),
-                    const LeavesComponent(),
-                    const SizedBox(height: 16),
-                    const LeavesListView(),
-                    const SizedBox(height: bottomNavigationHeight),
-                  ],
-                ),
-              ),
+            Consumer<AttendanceViewmodel>(
+              builder: (context, value, child) => value.loading
+                  ? const Center(child: CircularProgressIndicator.adaptive())
+                  : value.attendance == null
+                      ? Center(
+                          child: Text(
+                            "Empty attendance list",
+                            style: AppTextStyle.bold18.copyWith(
+                              color: AppColor.reBlack1C1F26,
+                            ),
+                          ),
+                        )
+                      : RefreshIndicator.adaptive(
+                          onRefresh: () async {
+                            context.read<LeaveViewmodel>().getLeaveTypes(
+                                onError: (val) {}, onSuccess: (val) {});
+                            context.read<LeaveViewmodel>().getLeaves(
+                                onError: (val) {}, onSuccess: (val) {});
+                          },
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 56),
+                                Text(
+                                  "Leaves",
+                                  style: AppTextStyle.bold18.copyWith(
+                                    color: AppColor.reBlack1C1F26,
+                                  ),
+                                ),
+                                const SizedBox(height: 14.5),
+                                const LeavesComponent(),
+                                const SizedBox(height: 16),
+                                const LeavesListView(),
+                                const SizedBox(height: bottomNavigationHeight),
+                              ],
+                            ),
+                          ),
+                        ),
             ),
             Positioned(
               right: 0,
